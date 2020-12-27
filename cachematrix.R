@@ -1,15 +1,41 @@
-## Put comments here that give an overall description of what your
-## functions do
+##>getwd()
+##[1] "C:/Users/a605294/Documents"
+##> setwd("C:/Users/a605294/OneDrive/Courses/R - Coursera/Week 3")
 
-## Write a short comment describing this function
+
 
 makeCacheMatrix <- function(x = matrix()) {
+    
+    inverse <- NULL
+    set <- function(y) {
+        x <<- y
+        inverse <<- NULL
+    }
+    get <- function() x
+    setinverse <- function(inverse) inverse <<- inverse
+    getinverse <- function() inverse
+    list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)
 
 }
 
 
-## Write a short comment describing this function
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    inverse <- x$getinverse()
+    if(!is.null(inverse)) {
+        message("getting cached data")
+        return(inverse)
+    }
+    data <-x$get()
+    inverse <- solve(data)
+    x$setinverse(inverse)
+    inverse
 }
+
+##mat <- matrix(rnorm(9,0), 3,3)
+##mat
+##matc <- makeCacheMatrix(x)
+##matc$get()
+##matc$getinverse()
+
+##cacheSolve(matc)
